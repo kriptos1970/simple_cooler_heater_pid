@@ -100,7 +100,8 @@ class PIDParameterNumber(RestoreNumber):
     def __init__(self, entry_id: str, device_name: str, desc: dict) -> None:
         self._entry_id = entry_id
         self._key = desc["key"]
-        self._attr_name = f"{device_name} {desc['name']}"
+        self._attr_name = f"{desc['name']}"
+        self._attr_has_entity_name = True
         self._attr_unique_id = f"{entry_id}_{self._key}"
         self._attr_icon = "mdi:ray-vertex"
         self._attr_mode = "box"
@@ -109,7 +110,6 @@ class PIDParameterNumber(RestoreNumber):
         self._attr_native_max_value = desc["max"]
         self._attr_native_step = desc["step"]
         self._attr_native_value = desc["default"]
-        self._attr_entity_id = f"number.{entry_id}_{self._key}"
         self._attr_entity_category = desc["entity_category"]
         self._device_name = device_name
 

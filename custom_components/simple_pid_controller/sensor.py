@@ -131,6 +131,7 @@ class PIDOutputSensor(CoordinatorEntity[PIDDataCoordinator], SensorEntity):
         super().__init__(coordinator)
         self._attr_unique_id = f"{entry_id}_pid_output"
         self._attr_name = f"{name} PID Output"
+        self._attr_has_entity_name = True
         self._attr_native_unit_of_measurement = "%"
         self._entry_id = entry_id
         self._device_name = name
@@ -162,9 +163,10 @@ class PIDContributionSensor(CoordinatorEntity[PIDDataCoordinator], SensorEntity)
     ):
         super().__init__(coordinator)
         self._attr_unique_id = f"{entry_id}_pid_{component}_contrib"
-        self._attr_name = f"{name} PID {component.upper()} Contribution"
+        self._attr_name = f"PID {component.upper()} Contribution"
         self._attr_entity_category = EntityCategory.DIAGNOSTIC
         self._attr_entity_registry_enabled_default = False
+        self._attr_has_entity_name = True
         self._handle = handle
         self._component = component
         self._entry_id = entry_id
