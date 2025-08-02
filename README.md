@@ -1,6 +1,27 @@
-# Simple PID Controller
+# Simple Cooler Heater PID Controller
 
-> The Simple PID Controller is a Home Assistant integration for real-time PID control with UI-based tuning and diagnostics.
+>This **fork** of the original [simple_pid_controller](https://github.com/bvweerd/simple_pid_controller) extends its functionality by adding support for a **Cooling Mode**.
+The Simple PID Controller is a Home Assistant integration for real-time PID control with UI-based tuning and diagnostics.
+---
+
+### Cooling Mode
+
+- In **Cooling Mode**, the PID output is **inverted**, allowing the controller to regulate systems where **decreasing** the control variable is needed  
+  (e.g., turning on a fan to reduce temperature), rather than increasing it as in heating mode.
+
+- ✅ The new feature is fully compatible with the existing configuration.
+
+- Introduces a **UI switch** (`cooling_mode`) to toggle between heating and cooling behavior **dynamically**.
+
+---
+
+### Use Cases
+
+This enhancement is especially useful for scenarios such as:  
+- Active cooling of enclosures  
+- Temperature-regulated fan control  
+- Other inverse-response systems
+
 
 ---
 
@@ -45,6 +66,7 @@
 | Switch   | `Auto Mode`               | Toggle automatic control                |
 | Switch   | `Proportional on Measurement` | Change proportional mode         |
 | Switch   | `Windup Protection`       | Toggle windup protection                |
+| Switch   | `Cooler mode`             | Toggle cooler mode                      |
 
 
 > 💡 All entities are editable via the UI in **Settings > Devices & Services > [Your Controller] > Options**.
@@ -59,7 +81,7 @@
 2. Click the three-dot menu (⋮) and select **Custom repositories**
 3. Add:
    ```text
-   https://github.com/bvweerd/simple_pid_controller
+   https://github.com/kriptos1970/simple_cooler_heater_pid
    ```
    Select **Integration** as type
 4. Search for **Simple PID Controller** and install
@@ -68,11 +90,11 @@
 ### Manual Installation
 
 1. Download or clone this repository
-2. Copy `simple_pid_controller` to `/config/custom_components/`
+2. Copy `simple_cooler_heater_pid` to `/config/custom_components/`
 3. Restart Home Assistant
 
 ### Removal Instructions 
-To remove the Simple PID Controller, navigate to **Settings > Devices & Services**, select **Simple PID Controller**, and click **Delete**. If installed manually, delete the `custom_components/simple_pid_controller` directory and restart Home Assistant.
+To remove the Simple PID Controller, navigate to **Settings > Devices & Services**, select **Simple PID Controller**, and click **Delete**. If installed manually, delete the `custom_components/simple_cooler_heater_pid` directory and restart Home Assistant.
 
 ---
 
@@ -104,6 +126,7 @@ The controller’s setpoint range defaults to **0.0 – 100.0**. To customize th
 | Switch   | `Auto Mode`                   | Enable/disable PID automation.                     |
 | Switch   | `Proportional on Measurement` | Use measurement instead of error for P term.       |
 | Switch   | `Windup Protection`           | Toggle windup protection                           |
+| Switch   | `Cooler mode`                 | Toggle cooler mode                                 |
 
 ---
 
@@ -180,8 +203,8 @@ Here's an example output showing the controller responding to a setpoint:
 
 ## 🛠️ Support & Development
 
-- **GitHub Repository**: [https://github.com/bvweerd/simple_pid_controller](https://github.com/bvweerd/simple_pid_controller)
-- **Issues & Bugs**: [Report here](https://github.com/bvweerd/simple_pid_controller/issues)
+- **GitHub Repository**: [https://github.com/kriptos1970/simple_cooler_heater_pid](https://github.com/kriptos1970/simple_cooler_heater_pid)
+- **Issues & Bugs**: [Report here](https://github.com/kriptos1970/simple_cooler_heater_pid/issues)
 
 ---
 
