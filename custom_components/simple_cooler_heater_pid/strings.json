@@ -1,9 +1,9 @@
 {
-  "title": "Simple PID Controller",
+  "title": "Simple cooler heater PID Controller",
   "config": {
     "step": {
       "user": {
-        "title": "Configure Simple PID Controller",
+        "title": "Configure PID Controller",
         "description": "Enter a name and choose the sensor to drive the PID loop.",
         "data": {
           "name": "Name",
@@ -15,7 +15,7 @@
       }
     },
     "abort": {
-      "single_instance_allowed": "Only a single instance of Simple PID Controller is allowed."
+      "single_instance_allowed": "Only a single instance of Simple cooler heater PID Controller is allowed."
     }
   },
   "options": {

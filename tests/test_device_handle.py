@@ -1,7 +1,7 @@
 import pytest
 from homeassistant.helpers import entity_registry as er
-from custom_components.simple_pid_controller import PIDDeviceHandle
-from custom_components.simple_pid_controller.const import DOMAIN
+from custom_components.simple_cooler_heater_pid import PIDDeviceHandle
+from custom_components.simple_cooler_heater_pid.const import DOMAIN
 
 
 class DummyRegistry:

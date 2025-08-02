@@ -1,7 +1,7 @@
-from custom_components.simple_pid_controller.diagnostics import (
+from custom_components.simple_cooler_heater_pid.diagnostics import (
     async_get_config_entry_diagnostics,
 )
-from custom_components.simple_pid_controller.const import (
+from custom_components.simple_cooler_heater_pid.const import (
     DOMAIN,
     CONF_SENSOR_ENTITY_ID,
     CONF_NAME,

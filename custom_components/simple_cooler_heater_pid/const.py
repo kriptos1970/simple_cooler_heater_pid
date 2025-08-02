@@ -1,9 +1,9 @@
 """Constants for the PID Controller integration."""
 
-DOMAIN = "simple_pid_controller"
+DOMAIN = "simple_cooler_heater_pid"
 
 CONF_NAME = "name"
-DEFAULT_NAME = "sPID-x"
+DEFAULT_NAME = "Simple-Cooler-Heater-PID"
 
 CONF_SENSOR_ENTITY_ID = "sensor_entity_id"
 

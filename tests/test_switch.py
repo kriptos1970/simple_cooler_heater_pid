@@ -1,5 +1,5 @@
 import pytest
-from custom_components.simple_pid_controller.switch import (
+from custom_components.simple_cooler_heater_pid.switch import (
     SWITCH_ENTITIES,
     PIDOptionSwitch,
 )

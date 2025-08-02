@@ -1,5 +1,5 @@
 import pytest
-from custom_components.simple_pid_controller.coordinator import PIDDataCoordinator
+from custom_components.simple_cooler_heater_pid.coordinator import PIDDataCoordinator
 from homeassistant.helpers.update_coordinator import UpdateFailed
 
 

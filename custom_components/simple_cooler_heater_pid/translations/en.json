@@ -1,9 +1,9 @@
 {
-  "title": "Simple PID Controller",
+  "title": "Simple Cooler Heater PID Controller",
   "config": {
     "step": {
       "user": {
-        "title": "Configure Simple PID Controller",
+        "title": "Configure Simple Cooler Heater PID Controller",
         "description": "Enter a name and choose the sensor to drive the PID loop.",
         "data": {
           "name": "Name",

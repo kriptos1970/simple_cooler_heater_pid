@@ -3,7 +3,7 @@ import pytest
 from homeassistant import config_entries
 from homeassistant.data_entry_flow import FlowResultType
 
-from custom_components.simple_pid_controller.const import (
+from custom_components.simple_cooler_heater_pid.const import (
     DOMAIN,
     CONF_NAME,
     CONF_SENSOR_ENTITY_ID,
@@ -16,7 +16,7 @@ from custom_components.simple_pid_controller.const import (
     DEFAULT_OUTPUT_RANGE_MIN,
     DEFAULT_OUTPUT_RANGE_MAX,
 )
-from custom_components.simple_pid_controller.config_flow import (
+from custom_components.simple_cooler_heater_pid.config_flow import (
     PIDControllerFlowHandler,
     PIDControllerOptionsFlowHandler,
 )

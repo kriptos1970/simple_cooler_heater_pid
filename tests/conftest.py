@@ -1,8 +1,8 @@
 import pytest
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 from homeassistant.helpers.device_registry import DeviceRegistry
-from custom_components.simple_pid_controller.const import DOMAIN, CONF_SENSOR_ENTITY_ID
-import custom_components.simple_pid_controller.sensor as sensor_mod
+from custom_components.simple_cooler_heater_pid.const import DOMAIN, CONF_SENSOR_ENTITY_ID
+import custom_components.simple_cooler_heater_pid.sensor as sensor_mod
 
 from homeassistant.const import CONF_NAME
 

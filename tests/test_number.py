@@ -1,12 +1,12 @@
 import pytest
 import logging
-from custom_components.simple_pid_controller.number import (
+from custom_components.simple_cooler_heater_pid.number import (
     PID_NUMBER_ENTITIES,
     CONTROL_NUMBER_ENTITIES,
     PIDParameterNumber,
     ControlParameterNumber,
 )
-from custom_components.simple_pid_controller.const import (
+from custom_components.simple_cooler_heater_pid.const import (
     DEFAULT_INPUT_RANGE_MIN,
     DEFAULT_INPUT_RANGE_MAX,
     DEFAULT_OUTPUT_RANGE_MIN,

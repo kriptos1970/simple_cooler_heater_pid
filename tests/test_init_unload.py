@@ -1,7 +1,7 @@
-from custom_components.simple_pid_controller import (
+from custom_components.simple_cooler_heater_pid import (
     async_unload_entry,
 )
-from custom_components.simple_pid_controller.const import DOMAIN
+from custom_components.simple_cooler_heater_pid.const import DOMAIN
 
 
 async def test_setup_and_unload_entry(hass, config_entry):
@@ -11,7 +11,7 @@ async def test_setup_and_unload_entry(hass, config_entry):
 
     # …and it should carry a PIDDeviceHandle…
     handle = config_entry.runtime_data.handle
-    from custom_components.simple_pid_controller import PIDDeviceHandle
+    from custom_components.simple_cooler_heater_pid import PIDDeviceHandle
 
     assert isinstance(handle, PIDDeviceHandle)
 

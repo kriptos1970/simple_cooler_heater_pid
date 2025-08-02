@@ -2,13 +2,13 @@ import pytest
 from datetime import timedelta
 from homeassistant.util.dt import utcnow
 from pytest_homeassistant_custom_component.common import async_fire_time_changed
-from custom_components.simple_pid_controller.sensor import (
+from custom_components.simple_cooler_heater_pid.sensor import (
     PIDContributionSensor,
     PIDOutputSensor,
 )
-from custom_components.simple_pid_controller.coordinator import PIDDataCoordinator
-from custom_components.simple_pid_controller.sensor import async_setup_entry
-from custom_components.simple_pid_controller import sensor as sensor_module
+from custom_components.simple_cooler_heater_pid.coordinator import PIDDataCoordinator
+from custom_components.simple_cooler_heater_pid.sensor import async_setup_entry
+from custom_components.simple_cooler_heater_pid import sensor as sensor_module
 
 
 @pytest.mark.asyncio
@@ -183,7 +183,7 @@ async def test_update_pid_output_limits_none_when_windup_protection_disabled(
             return self._output
 
     # Patch the PID in sensor-module
-    from custom_components.simple_pid_controller import sensor as sensor_module
+    from custom_components.simple_cooler_heater_pid import sensor as sensor_module
 
     monkeypatch.setattr(sensor_module, "PID", DummyPID)
 
