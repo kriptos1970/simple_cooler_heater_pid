@@ -3,6 +3,6 @@
   "render_readme": true,
   "zip_release": true,
   "filename": "simple_cooler_heater_pid.zip",
-  "logo": "icons/logo.png",
-  "icon": "icons/icon.png"
+  "logo": "assets/logo.png",
+  "icon": "assets/icon.png"
 }
