@@ -90,6 +90,22 @@ async def async_setup_entry(
         if cooling_mode:
             output = out_max + out_min - output
 
+        output_entity_id = entry.options.get("output_entity")  # configurato da UI
+
+        if output_entity_id:
+            _LOGGER.debug("Writing PID output %.2f to entity %s", output, output_entity_id)
+            hass.async_create_task(
+                hass.services.async_call(
+                    "input_number",  # oppure "number", a seconda dell'entità
+                    "set_value",
+                    {
+                        "entity_id": output_entity_id,
+                        "value": output,
+                    },
+                    blocking=False,
+                )
+            )
+
         # save last know output
         handle.last_known_output = output
 

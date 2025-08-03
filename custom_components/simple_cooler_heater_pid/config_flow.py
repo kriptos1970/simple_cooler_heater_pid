@@ -70,6 +70,9 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
+                vol.Optional("output_entity"): selector(
+                    {"entity": {"domain": "input_number"}}
+                ),
             }
         )
 
