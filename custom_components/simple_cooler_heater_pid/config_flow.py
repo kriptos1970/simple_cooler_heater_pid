@@ -73,7 +73,8 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional("output_entity"): selector(
                     {
                         "entity": {
-                            "domain": ["fan", "number", "light", "input_number"],
+                            # ✅ Nessun filtro = qualunque entità
+                            "multiple": False  # se vuoi consentire solo una
                         }
                     }
                 ),
