@@ -3,9 +3,11 @@
 DOMAIN = "simple_cooler_heater_pid"
 
 CONF_NAME = "name"
-DEFAULT_NAME = "Simple-Cooler-Heater-PID"
+DEFAULT_NAME = "Simple-Cooler-Heater"
 
 CONF_SENSOR_ENTITY_ID = "sensor_entity_id"
+
+CONF_OUTPUT_ENTITY_ID = "sensor_entity_id"
 
 CONF_INPUT_RANGE_MIN = "input_range_min"
 CONF_INPUT_RANGE_MAX = "input_range_max"
