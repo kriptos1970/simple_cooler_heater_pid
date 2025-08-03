@@ -71,7 +71,11 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
                 vol.Optional("output_entity"): selector(
-                    {"entity": {"domain": "input_number"}}
+                    {
+                        "entity": {
+                            "domain": ["fan", "number", "light", "input_number"],
+                        }
+                    }
                 ),
             }
         )
