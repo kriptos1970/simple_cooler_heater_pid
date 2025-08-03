@@ -104,8 +104,6 @@ async def async_setup_entry(
                 service_data["value"] = output
             elif domain == "fan":
                 service = "set_percentage"
-                # converti il valore in percentuale (assumendo che output sia normalizzato)
-                output = max(0, min(output, 100))  # clamp
                 service_data["percentage"] = output
             elif domain == "light":
                 service = "turn_on"
