@@ -90,18 +90,37 @@ async def async_setup_entry(
         if cooling_mode:
             output = out_max + out_min - output
 
-        output_entity_id = entry.options.get("output_entity")  # configurato da UI
+    
+        output_entity_id = entry.options.get("output_entity")
 
         if output_entity_id:
-            _LOGGER.debug("Writing PID output %.2f to entity %s", output, output_entity_id)
+            domain = output_entity_id.split(".")[0]
+            service_data = {
+                "entity_id": output_entity_id,
+            }
+
+            if domain in ("number", "input_number"):
+                service = "set_value"
+                service_data["value"] = output
+            elif domain == "fan":
+                service = "set_percentage"
+                # converti il valore in percentuale (assumendo che output sia normalizzato)
+                output = max(0, min(output, 100))  # clamp
+                service_data["percentage"] = output
+            elif domain == "light":
+                service = "turn_on"
+                service_data["brightness_pct"] = max(0, min(output, 100))
+            else:
+                _LOGGER.warning("Output entity domain %s not supported", domain)
+                return  # o continua in base al tuo caso
+
+            _LOGGER.debug("Setting PID output %.2f to entity %s via %s.%s", output, output_entity_id, domain, service)
+
             hass.async_create_task(
                 hass.services.async_call(
-                    "input_number",  # oppure "number", a seconda dell'entità
-                    "set_value",
-                    {
-                        "entity_id": output_entity_id,
-                        "value": output,
-                    },
+                    domain,
+                    service,
+                    service_data,
                     blocking=False,
                 )
             )
