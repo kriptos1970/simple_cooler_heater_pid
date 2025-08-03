@@ -2,7 +2,5 @@
   "name": "Simple cooler heater PID Controller",
   "render_readme": true,
   "zip_release": true,
-  "filename": "simple_cooler_heater_pid.zip",
-  "logo": "assets/logo.png",
-  "icon": "assets/icon.png"
+  "filename": "simple_cooler_heater_pid.zip"
 }
