@@ -53,10 +53,6 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the initial step."""
 
-        current_output_entity = self.config_entry.options.get(
-            CONF_OUTPUT_ENTITY
-        ) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
-
         schema = vol.Schema(
             {
                 vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
@@ -77,7 +73,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 ): vol.Coerce(float),
                 vol.Optional(
                     CONF_OUTPUT_ENTITY,
-                    default=current_output_entity,
+                    default=user_input.get(CONF_OUTPUT_ENTITY) if user_input else None,
                 ): selector({"entity": {"multiple": False}}),
             }
         )
@@ -188,8 +184,6 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
                 ): selector({"entity": {"multiple": False}}),
             }
         )
-        e1 = self.config_entry.options.get(CONF_OUTPUT_ENTITY)
-        e2 = self.config_entry.data.get(CONF_OUTPUT_ENTITY)
 
         # If the user has submitted the form, create the entry
         if user_input is not None:
