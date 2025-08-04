@@ -29,6 +29,7 @@ from .const import (
     DEFAULT_INPUT_RANGE_MAX,
     DEFAULT_OUTPUT_RANGE_MIN,
     DEFAULT_OUTPUT_RANGE_MAX,
+    CONF_OUTPUT_ENTITY,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -52,6 +53,10 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
     ) -> ConfigFlowResult:
         """Handle the initial step."""
 
+        current_output_entity = self.config_entry.options.get(
+            CONF_OUTPUT_ENTITY
+        ) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
+
         schema = vol.Schema(
             {
                 vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
@@ -70,6 +75,10 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
+                vol.Optional(
+                    CONF_OUTPUT_ENTITY,
+                    default=current_output_entity,
+                ): selector({"entity": {"multiple": False}}),
             }
         )
 
@@ -111,6 +120,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_INPUT_RANGE_MAX: user_input[CONF_INPUT_RANGE_MAX],
                     CONF_OUTPUT_RANGE_MIN: user_input[CONF_OUTPUT_RANGE_MIN],
                     CONF_OUTPUT_RANGE_MAX: user_input[CONF_OUTPUT_RANGE_MAX],
+                    CONF_OUTPUT_ENTITY: user_input.get(CONF_OUTPUT_ENTITY),
                 },
             )
 
@@ -146,6 +156,10 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
             CONF_OUTPUT_RANGE_MAX, DEFAULT_OUTPUT_RANGE_MAX
         )
 
+        current_output_entity = self.config_entry.options.get(
+            CONF_OUTPUT_ENTITY
+        ) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
+
         options_schema = vol.Schema(
             {
                 vol.Required(
@@ -168,8 +182,14 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
                     CONF_OUTPUT_RANGE_MAX,
                     default=current_output_max,
                 ): vol.Coerce(float),
+                vol.Optional(
+                    CONF_OUTPUT_ENTITY,
+                    default=current_output_entity,
+                ): selector({"entity": {"multiple": False}}),
             }
         )
+        e1 = self.config_entry.options.get(CONF_OUTPUT_ENTITY)
+        e2 = self.config_entry.data.get(CONF_OUTPUT_ENTITY)
 
         # If the user has submitted the form, create the entry
         if user_input is not None:
