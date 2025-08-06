@@ -1,8 +1,10 @@
 ![Logo](https://github.com/kriptos1970/simple_cooler_heater_pid/raw/main/assets/logo.png)
 # Simple Cooler Heater PID Controller
 
->This **fork** of the original [simple_pid_controller](https://github.com/bvweerd/simple_pid_controller) extends its functionality by adding support for a **Cooling Mode**.
-The Simple PID Controller is a Home Assistant integration for real-time PID control with UI-based tuning and diagnostics.
+> This **fork** of the original [simple_pid_controller](https://github.com/bvweerd/simple_pid_controller) enhances its functionality by adding support for a **Cooling Mode** and the ability to select a custom **output entity**.  
+>  
+> The Simple PID Controller is a Home Assistant integration that provides real-time PID control with a user-friendly interface for tuning and diagnostics.
+
 ---
 
 ### Cooling Mode
