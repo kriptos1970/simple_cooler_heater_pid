@@ -1,5 +1,5 @@
 {
-  "title": "Controller PID per Raffreddamento/Riscaldamento",
+  "title": "Simple Cooler Heater PID",
   "config": {
     "step": {
       "user": {
