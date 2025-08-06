@@ -1,7 +1,7 @@
 {
   "domain": "simple_cooler_heater_pid",
   "name": "Simple cooler heater PID Controller",
-  "codeowners": ["@kriptos1975"],
+  "codeowners": ["@kriptos1970"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/kriptos1970/simple_cooler_heater_pid",
@@ -11,6 +11,6 @@
   "quality_scale": "silver",
   "requirements": ["simple-pid==2.0.1"],
   "ssdp": [],
-  "version": "1.4.5",
+  "version": "1.4.9",
   "zeroconf": []
 }
