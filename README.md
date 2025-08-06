@@ -1,3 +1,4 @@
+![Logo](https://github.com/kriptos1970/simple_cooler_heater_pid/raw/main/assets/logo.png)
 # Simple Cooler Heater PID Controller
 
 >This **fork** of the original [simple_pid_controller](https://github.com/bvweerd/simple_pid_controller) extends its functionality by adding support for a **Cooling Mode**.
