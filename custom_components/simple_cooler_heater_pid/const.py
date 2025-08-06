@@ -7,8 +7,6 @@ DEFAULT_NAME = "Simple-Cooler-Heater"
 
 CONF_SENSOR_ENTITY_ID = "sensor_entity_id"
 
-CONF_OUTPUT_ENTITY_ID = "sensor_entity_id"
-
 CONF_INPUT_RANGE_MIN = "input_range_min"
 CONF_INPUT_RANGE_MAX = "input_range_max"
 CONF_OUTPUT_RANGE_MIN = "output_range_min"
@@ -18,4 +16,5 @@ DEFAULT_INPUT_RANGE_MIN = 0.0
 DEFAULT_INPUT_RANGE_MAX = 100.0
 DEFAULT_OUTPUT_RANGE_MIN = 0.0
 DEFAULT_OUTPUT_RANGE_MAX = 100.0
-CONF_OUTPUT_ENTITY = "output_entity"
+
+CONF_OUTPUT_ENTITY = "Output Entity"
