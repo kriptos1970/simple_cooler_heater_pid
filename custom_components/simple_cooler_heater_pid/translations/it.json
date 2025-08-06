@@ -1,0 +1,80 @@
+{
+  "title": "Controller PID per Raffreddamento/Riscaldamento",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configura il Controller PID",
+        "description": "Inserisci un nome e scegli il sensore per gestire il ciclo PID.",
+        "data": {
+          "name": "Nome",
+          "sensor_entity_id": "Sensor Entity",
+          "input_range_min": "Intervallo Minimo Ingresso",
+          "input_range_max": "Intervallo Massimo Ingresso",
+          "output_range_min": "Intervallo Minimo Uscita",
+          "output_range_max": "Intervallo Massimo Uscita"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "È consentita solo un'istanza con questo nome."
+    },
+    "error": {
+      "already_configured": "Una configurazione con questo nome esiste già.",
+      "input_range_min_max": "Il minimo deve essere inferiore al massimo.",
+      "output_range_min_max": "Il minimo deve essere inferiore al massimo."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Modifica le Opzioni del Controller PID",
+        "description": "Modifica il sensore e gli intervalli usati dal controller.",
+        "data": {
+          "sensor_entity_id": "Sensor Entity",
+          "input_range_min": "Intervallo Minimo Ingresso",
+          "input_range_max": "Intervallo Massimo Ingresso",
+          "output_range_min": "Intervallo Minimo Uscita",
+          "output_range_max": "Intervallo Massimo Uscita"
+        }
+      }
+    },
+    "error": {
+      "range_min_max": "Il minimo deve essere inferiore al massimo."
+    }
+  },
+  "entity": {
+    "number": {
+      "kp": {
+        "name": "Kp"
+      },
+      "ki": {
+        "name": "Ki"
+      },
+      "kd": {
+        "name": "Kd"
+      },
+      "setpoint": {
+        "name": "Setpoint"
+      },
+      "output": {
+        "name": "Output"
+      }
+    },
+    "switch": {
+      "auto_mode": {
+        "name": "Modalità Automatica"
+      },
+      "proportional_on_measurement": {
+        "name": "Proporzionale sulla Misura"
+      },
+      "windup_protection": {
+        "name": "Protezione da Windup"
+      }
+    },
+    "sensor": {
+      "current_value": {
+        "name": "Valore Attuale"
+      }
+    }
+  }
+}
