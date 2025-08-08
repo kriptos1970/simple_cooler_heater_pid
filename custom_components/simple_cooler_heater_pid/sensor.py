@@ -48,9 +48,20 @@ async def async_setup_entry(
             raise ValueError("Input sensor not available")
 
         # Read parameters from UI
-        kp = handle.get_number("kp")
-        ki = handle.get_number("ki")
-        kd = handle.get_number("kd")
+        cooling_mode = handle.get_switch("cooling_mode")
+
+        if cooling_mode:
+            # Invert PID parameters for cooling mode
+            _LOGGER.debug("Cooling mode enabled, inverting PID parameters")
+            kp = -1 * handle.get_number("kp")
+            ki = -1 * handle.get_number("ki")
+            kd = -1 * handle.get_number("kd")  
+        else:  
+            # Normal PID parameters
+            _LOGGER.debug("Cooling mode disabled, using normal PID parameters")
+            kp = handle.get_number("kp")
+            ki = handle.get_number("ki")
+            kd = handle.get_number("kd")
         setpoint = handle.get_number("setpoint")
         starting_output = handle.get_number("starting_output")
         start_mode = handle.get_select("start_mode")
@@ -60,7 +71,7 @@ async def async_setup_entry(
         auto_mode = handle.get_switch("auto_mode")
         p_on_m = handle.get_switch("proportional_on_measurement")
         windup_protection = handle.get_switch("windup_protection")
-        cooling_mode = handle.get_switch("cooling_mode")
+
 
         # adapt PID settings
         handle.pid.tunings = (kp, ki, kd)
@@ -87,8 +98,9 @@ async def async_setup_entry(
         handle.pid.proportional_on_measurement = p_on_m
 
         output = handle.pid(input_value)
-        if cooling_mode:
-            output = out_max + out_min - output
+        
+        #if cooling_mode:
+        #    output = out_max + out_min - output
 
         # save last know output
         handle.last_known_output = output
@@ -127,6 +139,32 @@ async def async_setup_entry(
         )
 
         if output_entity_id:
+            state = hass.states.get(output_entity_id)
+            accepts_integer = True  # default
+
+            if state is not None:
+                attrs = state.attributes
+                step_value = None
+                for key, value in attrs.items():
+                    if "step" in key.lower():
+                        step_value = value
+                        break  # prendi il primo attributo che contiene 'step'
+
+                if isinstance(step_value, (int, float)):
+                    accepts_integer = step_value >= 1
+
+                _LOGGER.debug(
+                    "Output entity %s has step-like attribute=%s -> accepts_integer=%s",
+                    output_entity_id,
+                    step_value,
+                    accepts_integer,
+                )
+            else:
+                _LOGGER.warning("State for entity %s not found", output_entity_id)
+
+            if accepts_integer:
+                output = round(output)    
+            
             domain = output_entity_id.split(".")[0]
             service_data = {
                 "entity_id": output_entity_id,
