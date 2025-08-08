@@ -139,6 +139,32 @@ async def async_setup_entry(
         )
 
         if output_entity_id:
+            state = hass.states.get(output_entity_id)
+            accepts_integer = True  # default
+
+            if state is not None:
+                attrs = state.attributes
+                step_value = None
+                for key, value in attrs.items():
+                    if "step" in key.lower():
+                        step_value = value
+                        break  # prendi il primo attributo che contiene 'step'
+
+                if isinstance(step_value, (int, float)):
+                    accepts_integer = step_value >= 1
+
+                _LOGGER.debug(
+                    "Output entity %s has step-like attribute=%s -> accepts_integer=%s",
+                    output_entity_id,
+                    step_value,
+                    accepts_integer,
+                )
+            else:
+                _LOGGER.warning("State for entity %s not found", output_entity_id)
+
+            if accepts_integer:
+                output = round(output)    
+            
             domain = output_entity_id.split(".")[0]
             service_data = {
                 "entity_id": output_entity_id,
