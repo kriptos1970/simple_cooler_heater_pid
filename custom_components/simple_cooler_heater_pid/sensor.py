@@ -140,7 +140,7 @@ async def async_setup_entry(
 
         if output_entity_id:
             state = hass.states.get(output_entity_id)
-            accepts_integer = True  # default
+            accepts_integer = False  # default
 
             if state is not None:
                 attrs = state.attributes
