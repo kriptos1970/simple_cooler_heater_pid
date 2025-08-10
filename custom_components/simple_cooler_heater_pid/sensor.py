@@ -20,6 +20,10 @@ from . import PIDDeviceHandle
 from .entity import BasePIDEntity
 from .coordinator import PIDDataCoordinator
 
+from .const import (
+    CONF_OUTPUT_ENTITY,
+)
+
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
 
@@ -134,8 +138,8 @@ async def async_setup_entry(
             _LOGGER.debug("Updating coordinator interval to %.2f seconds", sample_time)
             coordinator.update_interval = timedelta(seconds=sample_time)
 
-        output_entity_id = entry.options.get("output_entity") or entry.data.get(
-            "output_entity"
+        output_entity_id = entry.options.get(CONF_OUTPUT_ENTITY) or entry.data.get(
+            CONF_OUTPUT_ENTITY
         )
 
         if output_entity_id:
