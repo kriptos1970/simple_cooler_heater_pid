@@ -1,5 +1,5 @@
 {
-  "name": "Simple cooler heater PID Controller",
+  "name": "Rpi Fan PID Controller",
   "content_in_root": false,
   "render_readme": true,
   "zip_release": true,
