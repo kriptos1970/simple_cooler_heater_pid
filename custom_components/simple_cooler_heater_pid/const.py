@@ -3,7 +3,7 @@
 DOMAIN = "simple_cooler_heater_pid"
 
 CONF_NAME = "name"
-DEFAULT_NAME = "Simple-Cooler-Heater"
+DEFAULT_NAME = "Rpi Fan PID Controller"
 
 CONF_SENSOR_ENTITY_ID = "sensor_entity_id"
 
