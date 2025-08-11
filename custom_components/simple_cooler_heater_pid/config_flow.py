@@ -56,7 +56,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
         schema = vol.Schema(
             {
                 vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
-                vol.Optional(  # diventa facoltativo
+                vol.Optional( 
                     CONF_SENSOR_ENTITY_ID,
                 ): selector({"entity": {"domain": "sensor"}}),
                 vol.Optional(
@@ -71,7 +71,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
-                vol.Required(  # obbligatorio e solo fan
+                vol.Required(  
                     CONF_OUTPUT_ENTITY,
                 ): selector({"entity": {"domain": "fan", "multiple": False}}),
             }
@@ -110,7 +110,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 title=user_input[CONF_NAME],
                 data={
                     CONF_NAME: user_input[CONF_NAME],
-                    CONF_SENSOR_ENTITY_ID: user_input[CONF_SENSOR_ENTITY_ID],
+                    CONF_SENSOR_ENTITY_ID: user_input.get(CONF_SENSOR_ENTITY_ID),
                     CONF_INPUT_RANGE_MIN: user_input[CONF_INPUT_RANGE_MIN],
                     CONF_INPUT_RANGE_MAX: user_input[CONF_INPUT_RANGE_MAX],
                     CONF_OUTPUT_RANGE_MIN: user_input[CONF_OUTPUT_RANGE_MIN],
