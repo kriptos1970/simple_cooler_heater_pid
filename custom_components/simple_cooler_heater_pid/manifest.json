@@ -11,6 +11,6 @@
   "quality_scale": "silver",
   "requirements": ["simple-pid==2.0.1"],
   "ssdp": [],
-  "version": "0.0.1",
+  "version": "0.0.2",
   "zeroconf": []
 }
