@@ -1,5 +1,5 @@
 {
-  "title": "Simple Cooler Heater PID",
+  "title": "Rpi Fan PID Controller",
   "config": {
     "step": {
       "user": {
