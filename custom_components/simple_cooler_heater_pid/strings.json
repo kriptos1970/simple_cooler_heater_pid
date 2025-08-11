@@ -15,7 +15,7 @@
       }
     },
     "abort": {
-      "single_instance_allowed": "Only a single instance of Simple cooler heater PID Controller is allowed."
+      "single_instance_allowed": "Only a single instance of Rpi Fan PID Controller is allowed."
     }
   },
   "options": {
