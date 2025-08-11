@@ -75,6 +75,8 @@ async def async_setup_entry(
             if input_value is None:
                 raise ValueError("Input sensor not available or not set.")
 
+        handle.last_cpu_temp = input_value
+
         # Read parameters from UI
         #cooling_mode = handle.get_switch("cooling_mode")
         cooling_mode = True
