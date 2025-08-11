@@ -1,9 +1,9 @@
 {
-  "title": "Simple Cooler Heater PID Controller",
+  "title": "Rpi Fan PID Controller",
   "config": {
     "step": {
       "user": {
-        "title": "Configure Simple Cooler Heater PID Controller",
+        "title": "Configure Rpi Fan PID Controller",
         "description": "Enter a name and choose the sensor to drive the PID loop.",
         "data": {
           "name": "Name",
@@ -27,7 +27,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "Edit PID Controller Options",
+        "title": "Edit Rpi Fan PID Controller Options",
         "description": "Modify the sensor entity and range used by the controller.",
         "data": {
           "sensor_entity_id": "Sensor Entity",
