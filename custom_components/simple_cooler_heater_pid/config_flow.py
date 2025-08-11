@@ -56,9 +56,9 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
         schema = vol.Schema(
             {
                 vol.Required(CONF_NAME, default=DEFAULT_NAME): str,
-                vol.Required(CONF_SENSOR_ENTITY_ID): selector(
-                    {"entity": {"domain": "sensor"}}
-                ),
+                vol.Optional(  # diventa facoltativo
+                    CONF_SENSOR_ENTITY_ID,
+                ): selector({"entity": {"domain": "sensor"}}),
                 vol.Optional(
                     CONF_INPUT_RANGE_MIN, default=DEFAULT_INPUT_RANGE_MIN
                 ): vol.Coerce(float),
@@ -71,10 +71,9 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
-                vol.Optional(
+                vol.Required(  # obbligatorio e solo fan
                     CONF_OUTPUT_ENTITY,
-                    default=user_input.get(CONF_OUTPUT_ENTITY) if user_input else None,
-                ): selector({"entity": {"multiple": False}}),
+                ): selector({"entity": {"domain": "fan", "multiple": False}}),
             }
         )
 
@@ -156,32 +155,38 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
             CONF_OUTPUT_ENTITY
         ) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
 
+
         options_schema = vol.Schema(
             {
-                vol.Required(
+                vol.Optional(  # diventa facoltativo
                     CONF_SENSOR_ENTITY_ID,
                     default=current_sensor,
                 ): selector({"entity": {"domain": "sensor"}}),
+
                 vol.Required(
                     CONF_INPUT_RANGE_MIN,
                     default=current_input_min,
                 ): vol.Coerce(float),
+
                 vol.Required(
                     CONF_INPUT_RANGE_MAX,
                     default=current_input_max,
                 ): vol.Coerce(float),
+
                 vol.Required(
                     CONF_OUTPUT_RANGE_MIN,
                     default=current_output_min,
                 ): vol.Coerce(float),
+
                 vol.Required(
                     CONF_OUTPUT_RANGE_MAX,
                     default=current_output_max,
                 ): vol.Coerce(float),
-                vol.Optional(
+
+                vol.Required(  
                     CONF_OUTPUT_ENTITY,
                     default=current_output_entity,
-                ): selector({"entity": {"multiple": False}}),
+                ): selector({"entity": {"domain": "fan", "multiple": False}}),
             }
         )
 

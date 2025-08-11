@@ -30,6 +30,27 @@ PARALLEL_UPDATES = 0
 _LOGGER = logging.getLogger(__name__)
 
 
+def read_cpu_temperature():
+    with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
+        temp_str = f.readline().strip()
+    return float(temp_str) / 1000.0  # in °C
+
+
+class PIDCPUTemperatureSensor(CoordinatorEntity[PIDDataCoordinator], SensorEntity):
+    """Sensor representing the CPU temperature."""
+
+    def __init__(self, hass, entry: ConfigEntry, coordinator: PIDDataCoordinator):
+        super().__init__(coordinator)
+        BasePIDEntity.__init__(self, hass, entry, "cpu_temperature", "CPU Temperature")
+        self._attr_native_unit_of_measurement = "°C"
+        self._attr_state_class = SensorStateClass.MEASUREMENT
+        self.handle = entry.runtime_data.handle
+
+    @property
+    def native_value(self) -> float | None:
+        return getattr(self.handle, "last_cpu_temp", None)
+
+
 async def async_setup_entry(
     hass: HomeAssistant,
     entry: ConfigEntry,
@@ -47,13 +68,16 @@ async def async_setup_entry(
 
     async def update_pid():
         """Update the PID output using current sensor and parameter values."""
-        input_value = handle.get_input_sensor_value()
+        
+        input_value = read_cpu_temperature()
         if input_value is None:
-            raise ValueError("Input sensor not available")
+            input_value = handle.get_input_sensor_value()
+            if input_value is None:
+                raise ValueError("Input sensor not available or not set.")
 
         # Read parameters from UI
-        cooling_mode = handle.get_switch("cooling_mode")
-
+        #cooling_mode = handle.get_switch("cooling_mode")
+        cooling_mode = True
         if cooling_mode:
             # Invert PID parameters for cooling mode
             _LOGGER.debug("Cooling mode enabled, inverting PID parameters")
@@ -238,6 +262,7 @@ async def async_setup_entry(
             ),
             PIDContributionSensor(hass, entry, "error", "Error", coordinator),
             PIDContributionSensor(hass, entry, "pid_i_delta", "I delta", coordinator),
+            PIDCPUTemperatureSensor(hass, entry, coordinator),
         ]
     )
 
