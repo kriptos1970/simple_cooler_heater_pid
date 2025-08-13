@@ -11,7 +11,9 @@
           "input_range_min": "Minimum Input Range",
           "input_range_max": "Maximum Input Range",
           "output_range_min": "Minimum Output Range",
-          "output_range_max": "Maximum Output Range"
+          "output_range_max": "Maximum Output Range",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Port"
         }
       }
     },
@@ -34,7 +36,9 @@
           "input_range_min": "Minimum Input Range",
           "input_range_max": "Maximum Input Range",
           "output_range_min": "Minimum Output Range",
-          "output_range_max": "Maximum Output Range"
+          "output_range_max": "Maximum Output Range",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Port"
         }
       }
     },

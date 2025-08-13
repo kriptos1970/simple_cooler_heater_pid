@@ -29,6 +29,12 @@ from .const import (
     DEFAULT_INPUT_RANGE_MAX,
     DEFAULT_OUTPUT_RANGE_MIN,
     DEFAULT_OUTPUT_RANGE_MAX,
+    CONF_PGPIO_HOST,
+    DEFAULT_PGPIO_HOST,
+    CONF_PGPIO_PORT,
+    DEFAULT_PGIPO_PORT,
+    CONF_PGPIO_PIN,
+    DEFAULT_PGIPO_PIN
     #CONF_OUTPUT_ENTITY,
 )
 
@@ -71,10 +77,9 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
-                #vol.Optional(
-                #    CONF_OUTPUT_ENTITY,
-                #    default=user_input.get(CONF_OUTPUT_ENTITY) if user_input else None,
-                #): selector({"entity": {"multiple": False}}),
+                vol.Optional(CONF_PGPIO_HOST, default=DEFAULT_PGPIO_HOST): str,
+                vol.Optional(CONF_PGPIO_PORT, default=DEFAULT_PGIPO_PORT): vol.Coerce(int),
+                vol.Optional(CONF_PGPIO_PIN, default=DEFAULT_PGIPO_PIN): vol.Coerce(int),
             }
         )
 
@@ -116,6 +121,9 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_INPUT_RANGE_MAX: user_input[CONF_INPUT_RANGE_MAX],
                     CONF_OUTPUT_RANGE_MIN: user_input[CONF_OUTPUT_RANGE_MIN],
                     CONF_OUTPUT_RANGE_MAX: user_input[CONF_OUTPUT_RANGE_MAX],
+                    CONF_PGPIO_HOST: user_input[CONF_PGPIO_HOST],
+                    CONF_PGPIO_PORT: user_input[CONF_PGPIO_PORT],
+                    CONF_PGPIO_PIN: user_input[CONF_PGPIO_PIN],
                     #CONF_OUTPUT_ENTITY: user_input.get(CONF_OUTPUT_ENTITY),
                 },
             )
@@ -178,10 +186,15 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
                     CONF_OUTPUT_RANGE_MAX,
                     default=current_output_max,
                 ): vol.Coerce(float),
-                #vol.Optional(
-                #    CONF_OUTPUT_ENTITY,
-                #    default=current_output_entity,
-                #): selector({"entity": {"multiple": False}}),
+                vol.Optional(
+                    CONF_PGPIO_HOST, default=self.config_entry.options.get(CONF_PGPIO_HOST, DEFAULT_PGPIO_HOST)
+                ): str,
+                vol.Optional(
+                    CONF_PGPIO_PORT, default=self.config_entry.options.get(CONF_PGPIO_PORT, DEFAULT_PGIPO_PORT)
+                ): vol.Coerce(int),
+                vol.Optional(
+                    CONF_PGPIO_PIN, default=self.config_entry.options.get(CONF_PGPIO_PIN, DEFAULT_PGIPO_PIN)
+                ): vol.Coerce(int),
             }
         )
 

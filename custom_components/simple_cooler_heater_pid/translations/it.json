@@ -11,7 +11,9 @@
           "input_range_min": "Intervallo Minimo Ingresso",
           "input_range_max": "Intervallo Massimo Ingresso",
           "output_range_min": "Intervallo Minimo Uscita",
-          "output_range_max": "Intervallo Massimo Uscita"
+          "output_range_max": "Intervallo Massimo Uscita",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Port"
         }
       }
     },
@@ -34,7 +36,9 @@
           "input_range_min": "Intervallo Minimo Ingresso",
           "input_range_max": "Intervallo Massimo Ingresso",
           "output_range_min": "Intervallo Minimo Uscita",
-          "output_range_max": "Intervallo Massimo Uscita"
+          "output_range_max": "Intervallo Massimo Uscita",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Port"
         }
       }
     },

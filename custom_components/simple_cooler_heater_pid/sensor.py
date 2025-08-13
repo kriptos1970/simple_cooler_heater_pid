@@ -20,18 +20,17 @@ from . import PIDDeviceHandle
 from .entity import BasePIDEntity
 from .coordinator import PIDDataCoordinator
 
-#from .const import (
-#    CONF_OUTPUT_ENTITY,
-#)
+from .const import (
+    CONF_PGPIO_HOST,
+    DEFAULT_PGPIO_HOST,
+    CONF_PGPIO_PORT,
+    DEFAULT_PGIPO_PORT,
+    CONF_PGPIO_PIN,
+    DEFAULT_PGIPO_PIN
+)
 
 from gpiozero import PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
-
-# Configura la connessione al demone pigpio
-factory = PiGPIOFactory(host='192.168.1.47', port=8888)  # Modifica se pigpiod è remoto
-
-# Pin della ventola (PWM hardware)
-fan = PWMOutputDevice(18, pin_factory=factory)
 
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
@@ -173,6 +172,14 @@ async def async_setup_entry(
             _LOGGER.debug("Updating coordinator interval to %.2f seconds", sample_time)
             coordinator.update_interval = timedelta(seconds=sample_time)
 
+        user_host = handle.get_string(CONF_PGPIO_HOST, DEFAULT_PGPIO_HOST)
+        user_port = handle.get_number(CONF_PGPIO_PORT, DEFAULT_PGIPO_PORT)   
+        user_pin = handle.get_number(CONF_PGPIO_PIN, DEFAULT_PGIPO_PIN)
+        # Configura la connessione al demone pigpio
+        factory = PiGPIOFactory(host=user_host, port=user_port)
+
+        # Pin della ventola (PWM hardware)
+        fan = PWMOutputDevice(user_pin, pin_factory=factory)
         # Imposta la ventola al valore di output
         duty = output / 100
         fan.value = duty

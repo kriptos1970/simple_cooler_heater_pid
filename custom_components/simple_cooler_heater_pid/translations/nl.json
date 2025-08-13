@@ -11,7 +11,9 @@
           "input_range_min": "Minimum Input Bereik",
           "input_range_max": "Maximum Input Bereik",
           "output_range_min": "Minimum Output Bereik",
-          "output_range_max": "Maximum Output Bereik"        }
+          "output_range_max": "Maximum Output Bereik",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Poort"}
       }
     },
     "abort": {
@@ -33,7 +35,9 @@
           "input_range_min": "Minimum Input Bereik",
           "input_range_max": "Maximum Input Bereik",
           "output_range_min": "Minimum Output Bereik",
-          "output_range_max": "Maximum Output Bereik"
+          "output_range_max": "Maximum Output Bereik",
+          "pgio_host": "Pigpio Host",
+          "pgio_port": "Pigpio Poort"
         }
       }
     },
