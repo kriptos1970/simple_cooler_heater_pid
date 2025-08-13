@@ -21,12 +21,12 @@ from .entity import BasePIDEntity
 from .coordinator import PIDDataCoordinator
 
 from .const import (
-    CONF_PGPIO_HOST,
-    DEFAULT_PGPIO_HOST,
-    CONF_PGPIO_PORT,
-    DEFAULT_PGIPO_PORT,
-    CONF_PGPIO_PIN,
-    DEFAULT_PGIPO_PIN
+    CONF_PIGPIO_HOST,
+    DEFAULT_PIGPIO_HOST,
+    CONF_PIGPIO_PORT,
+    DEFAULT_PIGIPIO_PORT,
+    CONF_PIGPIO_PIN,
+    DEFAULT_PIGIPIO_PIN
 )
 
 from gpiozero import PWMOutputDevice
@@ -172,9 +172,9 @@ async def async_setup_entry(
             _LOGGER.debug("Updating coordinator interval to %.2f seconds", sample_time)
             coordinator.update_interval = timedelta(seconds=sample_time)
 
-        user_host = handle.get_string(CONF_PGPIO_HOST, DEFAULT_PGPIO_HOST)
-        user_port = handle.get_number(CONF_PGPIO_PORT, DEFAULT_PGIPO_PORT)   
-        user_pin = handle.get_number(CONF_PGPIO_PIN, DEFAULT_PGIPO_PIN)
+        user_host = handle.get_string(CONF_PIGPIO_HOST, DEFAULT_PIGPIO_HOST)
+        user_port = handle.get_number(CONF_PIGPIO_PORT, DEFAULT_PIGIPIO_PORT)   
+        user_pin = handle.get_number(CONF_PIGPIO_PIN, DEFAULT_PIGIPIO_PIN)
         # Configura la connessione al demone pigpio
         factory = PiGPIOFactory(host=user_host, port=user_port)
 
