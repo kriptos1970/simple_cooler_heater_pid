@@ -28,7 +28,7 @@ from gpiozero import PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
 
 # Configura la connessione al demone pigpio
-factory = PiGPIOFactory(host='127.0.0.1', port=8888)  # Modifica se pigpiod è remoto
+factory = PiGPIOFactory(host='192.168.1.47', port=8888)  # Modifica se pigpiod è remoto
 
 # Pin della ventola (PWM hardware)
 fan = PWMOutputDevice(18, pin_factory=factory)
