@@ -24,9 +24,9 @@ from .const import (
     CONF_PIGPIO_HOST,
     DEFAULT_PIGPIO_HOST,
     CONF_PIGPIO_PORT,
-    DEFAULT_PIGIPIO_PORT,
+    DEFAULT_PIGPIO_PORT,
     CONF_PIGPIO_PIN,
-    DEFAULT_PIGIPIO_PIN
+    DEFAULT_PIGPIO_PIN
 )
 
 from gpiozero import PWMOutputDevice
@@ -73,6 +73,21 @@ async def async_setup_entry(
     handle.pid.output_limits = (-10.0, 10.0)
     handle.last_contributions = (0, 0, 0, 0)
     handle.last_known_output = None
+
+    # NUOVA SEZIONE: Inizializza gli oggetti una sola volta durante il setup
+    user_host = entry.data.get(CONF_PIGPIO_HOST, DEFAULT_PIGPIO_HOST)
+    user_port = entry.data.get(CONF_PIGPIO_PORT, DEFAULT_PIGPIO_PORT)
+    user_pin = entry.data.get(CONF_PIGPIO_PIN, DEFAULT_PIGPIO_PIN)
+
+    try:
+        factory = PiGPIOFactory(host=user_host, port=user_port)
+        fan = PWMOutputDevice(user_pin, pin_factory=factory)
+        # Salva l'oggetto fan nell'handle per riutilizzarlo
+        handle.fan_device = fan
+    except Exception as e:
+        _LOGGER.error("Errore durante l'inizializzazione del PWM fan: %s", e)
+        # Gestisci l'errore, ad esempio disabilitando la funzione della ventola
+
 
     async def update_pid():
         """Update the PID output using current sensor and parameter values."""
@@ -173,16 +188,15 @@ async def async_setup_entry(
             coordinator.update_interval = timedelta(seconds=sample_time)
 
         user_host = handle.get_string(CONF_PIGPIO_HOST, DEFAULT_PIGPIO_HOST)
-        user_port = handle.get_number(CONF_PIGPIO_PORT, DEFAULT_PIGIPIO_PORT)   
-        user_pin = handle.get_number(CONF_PIGPIO_PIN, DEFAULT_PIGIPIO_PIN)
+        user_port = handle.get_number(CONF_PIGPIO_PORT, DEFAULT_PIGPIO_PORT)   
+        user_pin = handle.get_number(CONF_PIGPIO_PIN, DEFAULT_PIGPIO_PIN)
         # Configura la connessione al demone pigpio
         factory = PiGPIOFactory(host=user_host, port=user_port)
 
-        # Pin della ventola (PWM hardware)
-        fan = PWMOutputDevice(user_pin, pin_factory=factory)
-        # Imposta la ventola al valore di output
-        duty = output / 100
-        fan.value = duty
+        # Usa l'oggetto fan già esistente
+        if hasattr(handle, 'fan_device'):
+            duty = output / 100
+            handle.fan_device.value = duty
 
         return output
 

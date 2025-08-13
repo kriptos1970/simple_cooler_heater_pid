@@ -32,9 +32,9 @@ from .const import (
     CONF_PIGPIO_HOST,
     DEFAULT_PIGPIO_HOST,
     CONF_PIGPIO_PORT,
-    DEFAULT_PIGIPIO_PORT,
+    DEFAULT_PIGPIO_PORT,
     CONF_PIGPIO_PIN,
-    DEFAULT_PIGIPIO_PIN
+    DEFAULT_PIGPIO_PIN
     #CONF_OUTPUT_ENTITY,
 )
 
@@ -78,8 +78,8 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
                 vol.Optional(CONF_PIGPIO_HOST, default=DEFAULT_PIGPIO_HOST): str,
-                vol.Optional(CONF_PIGPIO_PORT, default=DEFAULT_PIGIPIO_PORT): vol.Coerce(int),
-                vol.Optional(CONF_PIGPIO_PIN, default=DEFAULT_PIGIPIO_PIN): vol.Coerce(int),
+                vol.Optional(CONF_PIGPIO_PORT, default=DEFAULT_PIGPIO_PORT): vol.Coerce(int),
+                vol.Optional(CONF_PIGPIO_PIN, default=DEFAULT_PIGPIO_PIN): vol.Coerce(int),
             }
         )
 
@@ -190,10 +190,10 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
                     CONF_PIGPIO_HOST, default=self.config_entry.options.get(CONF_PIGPIO_HOST, DEFAULT_PIGPIO_HOST)
                 ): str,
                 vol.Optional(
-                    CONF_PIGPIO_PORT, default=self.config_entry.options.get(CONF_PIGPIO_PORT, DEFAULT_PIGIPIO_PORT)
+                    CONF_PIGPIO_PORT, default=self.config_entry.options.get(CONF_PIGPIO_PORT, DEFAULT_PIGPIO_PORT)
                 ): vol.Coerce(int),
                 vol.Optional(
-                    CONF_PIGPIO_PIN, default=self.config_entry.options.get(CONF_PIGPIO_PIN, DEFAULT_PIGIPIO_PIN)
+                    CONF_PIGPIO_PIN, default=self.config_entry.options.get(CONF_PIGPIO_PIN, DEFAULT_PIGPIO_PIN)
                 ): vol.Coerce(int),
             }
         )
