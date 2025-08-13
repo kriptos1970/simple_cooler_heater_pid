@@ -20,9 +20,9 @@ from . import PIDDeviceHandle
 from .entity import BasePIDEntity
 from .coordinator import PIDDataCoordinator
 
-from .const import (
-    CONF_OUTPUT_ENTITY,
-)
+#from .const import (
+#    CONF_OUTPUT_ENTITY,
+#)
 
 from gpiozero import PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory

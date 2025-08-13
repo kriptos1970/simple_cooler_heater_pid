@@ -29,7 +29,7 @@ from .const import (
     DEFAULT_INPUT_RANGE_MAX,
     DEFAULT_OUTPUT_RANGE_MIN,
     DEFAULT_OUTPUT_RANGE_MAX,
-    CONF_OUTPUT_ENTITY,
+    #CONF_OUTPUT_ENTITY,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,10 +71,10 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                 vol.Optional(
                     CONF_OUTPUT_RANGE_MAX, default=DEFAULT_OUTPUT_RANGE_MAX
                 ): vol.Coerce(float),
-                vol.Optional(
-                    CONF_OUTPUT_ENTITY,
-                    default=user_input.get(CONF_OUTPUT_ENTITY) if user_input else None,
-                ): selector({"entity": {"multiple": False}}),
+                #vol.Optional(
+                #    CONF_OUTPUT_ENTITY,
+                #    default=user_input.get(CONF_OUTPUT_ENTITY) if user_input else None,
+                #): selector({"entity": {"multiple": False}}),
             }
         )
 
@@ -116,7 +116,7 @@ class PIDControllerFlowHandler(ConfigFlow, domain=DOMAIN):
                     CONF_INPUT_RANGE_MAX: user_input[CONF_INPUT_RANGE_MAX],
                     CONF_OUTPUT_RANGE_MIN: user_input[CONF_OUTPUT_RANGE_MIN],
                     CONF_OUTPUT_RANGE_MAX: user_input[CONF_OUTPUT_RANGE_MAX],
-                    CONF_OUTPUT_ENTITY: user_input.get(CONF_OUTPUT_ENTITY),
+                    #CONF_OUTPUT_ENTITY: user_input.get(CONF_OUTPUT_ENTITY),
                 },
             )
 
@@ -152,9 +152,9 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
             CONF_OUTPUT_RANGE_MAX, DEFAULT_OUTPUT_RANGE_MAX
         )
 
-        current_output_entity = self.config_entry.options.get(
-            CONF_OUTPUT_ENTITY
-        ) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
+        #current_output_entity = self.config_entry.options.get(
+        #    CONF_OUTPUT_ENTITY
+        #) or self.config_entry.data.get(CONF_OUTPUT_ENTITY)
 
         options_schema = vol.Schema(
             {
@@ -178,10 +178,10 @@ class PIDControllerOptionsFlowHandler(OptionsFlow):
                     CONF_OUTPUT_RANGE_MAX,
                     default=current_output_max,
                 ): vol.Coerce(float),
-                vol.Optional(
-                    CONF_OUTPUT_ENTITY,
-                    default=current_output_entity,
-                ): selector({"entity": {"multiple": False}}),
+                #vol.Optional(
+                #    CONF_OUTPUT_ENTITY,
+                #    default=current_output_entity,
+                #): selector({"entity": {"multiple": False}}),
             }
         )
 
