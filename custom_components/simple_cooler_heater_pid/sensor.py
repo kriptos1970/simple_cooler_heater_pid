@@ -24,6 +24,15 @@ from .const import (
     CONF_OUTPUT_ENTITY,
 )
 
+from gpiozero import PWMOutputDevice
+from gpiozero.pins.pigpio import PiGPIOFactory
+
+# Configura la connessione al demone pigpio
+factory = PiGPIOFactory(host='127.0.0.1', port=8888)  # Modifica se pigpiod è remoto
+
+# Pin della ventola (PWM hardware)
+fan = PWMOutputDevice(18, pin_factory=factory)
+
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
 
@@ -164,73 +173,9 @@ async def async_setup_entry(
             _LOGGER.debug("Updating coordinator interval to %.2f seconds", sample_time)
             coordinator.update_interval = timedelta(seconds=sample_time)
 
-        output_entity_id = entry.options.get(CONF_OUTPUT_ENTITY) or entry.data.get(
-            CONF_OUTPUT_ENTITY
-        )
-
-        if output_entity_id:
-            state = hass.states.get(output_entity_id)
-            accepts_integer = False  # default
-
-            if state is not None:
-                attrs = state.attributes
-                step_value = None
-                for key, value in attrs.items():
-                    if "step" in key.lower():
-                        step_value = value
-                        break  # prendi il primo attributo che contiene 'step'
-
-                if isinstance(step_value, (int, float)):
-                    accepts_integer = step_value >= 1
-
-                _LOGGER.debug(
-                    "Output entity %s has step-like attribute=%s -> accepts_integer=%s",
-                    output_entity_id,
-                    step_value,
-                    accepts_integer,
-                )
-            else:
-                _LOGGER.warning("State for entity %s not found", output_entity_id)
-
-            if accepts_integer:
-                output = round(output)    
-            
-            domain = output_entity_id.split(".")[0]
-            service_data = {
-                "entity_id": output_entity_id,
-            }
-
-            if domain in ("number", "input_number"):
-                service = "set_value"
-                service_data["value"] = output
-            elif domain == "fan":
-                service = "set_percentage"
-                # converti il valore in percentuale (assumendo che output sia normalizzato)
-                output = max(0, min(output, 100))  # clamp
-                service_data["percentage"] = output
-            elif domain == "light":
-                service = "turn_on"
-                service_data["brightness_pct"] = max(0, min(output, 100))
-            else:
-                _LOGGER.warning("Output entity domain %s not supported", domain)
-                return output  # o continua in base al tuo caso
-
-            _LOGGER.debug(
-                "Setting PID output %.2f to entity %s via %s.%s",
-                output,
-                output_entity_id,
-                domain,
-                service,
-            )
-
-            hass.async_create_task(
-                hass.services.async_call(
-                    domain,
-                    service,
-                    service_data,
-                    blocking=False,
-                )
-            )
+        # Imposta la ventola al valore di output
+        duty = output / 100
+        fan.value = duty
 
         return output
 
