@@ -92,7 +92,7 @@ async def async_setup_entry(
     async def update_pid():
         """Update the PID output using current sensor and parameter values."""
         
-        input_value = read_cpu_temperature()
+        input_value = await hass.async_add_executor_job(read_cpu_temperature)
         if input_value is None:
             input_value = handle.get_input_sensor_value()
             if input_value is None:
