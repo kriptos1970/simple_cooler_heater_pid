@@ -187,12 +187,6 @@ async def async_setup_entry(
             _LOGGER.debug("Updating coordinator interval to %.2f seconds", sample_time)
             coordinator.update_interval = timedelta(seconds=sample_time)
 
-        user_host = handle.get_string(CONF_PIGPIO_HOST, DEFAULT_PIGPIO_HOST)
-        user_port = handle.get_number(CONF_PIGPIO_PORT, DEFAULT_PIGPIO_PORT)   
-        user_pin = handle.get_number(CONF_PIGPIO_PIN, DEFAULT_PIGPIO_PIN)
-        # Configura la connessione al demone pigpio
-        factory = PiGPIOFactory(host=user_host, port=user_port)
-
         # Usa l'oggetto fan già esistente
         if hasattr(handle, 'fan_device'):
             duty = output / 100
