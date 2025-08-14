@@ -24,6 +24,11 @@ SWITCH_ENTITIES = [
         "name": "Windup Protection",
         "default_state": True,
     },
+    {
+        "key": "internal_sensor",
+        "name": "Internal Temp. Sensor",
+        "default_state": True,
+    },
     #{
     #    "key": "cooling_mode",
     #    "name": "Cooling Mode",

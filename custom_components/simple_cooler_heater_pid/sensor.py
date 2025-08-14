@@ -26,7 +26,9 @@ from .const import (
     CONF_PIGPIO_PORT,
     DEFAULT_PIGPIO_PORT,
     CONF_PIGPIO_PIN,
-    DEFAULT_PIGPIO_PIN
+    DEFAULT_PIGPIO_PIN,
+    CONF_INTERNAL_SENSOR,
+    DEFAULT_INTERNAL_SENSOR,
 )
 
 from gpiozero import PWMOutputDevice
@@ -107,8 +109,13 @@ async def async_setup_entry(
     async def update_pid():
         """Update the PID output using current sensor and parameter values."""
         
-        input_value = await hass.async_add_executor_job(read_cpu_temperature)
-        if input_value is None:
+        internal_sensor = handle.get_switch(CONF_INTERNAL_SENSOR)
+        if internal_sensor:
+            input_value = await hass.async_add_executor_job(read_cpu_temperature)
+            if input_value is None:
+                _LOGGER.error("CPU temperature sensor not available.")
+
+        if not internal_sensor:
             input_value = handle.get_input_sensor_value()
             if input_value is None:
                 raise ValueError("Input sensor not available or not set.")
