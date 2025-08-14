@@ -9,8 +9,8 @@
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/kriptos1970/simple_cooler_heater_pid/issues",
   "quality_scale": "silver",
-  "requirements": ["simple-pid==2.0.1"],
+  "requirements": ["simple-pid==2.0.1", "gpiozero", "pigpio"],
   "ssdp": [],
-  "version": "1.0.5",
+  "version": "1.0.6",
   "zeroconf": []
 }

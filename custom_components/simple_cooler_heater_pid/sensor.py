@@ -32,16 +32,31 @@ from .const import (
 from gpiozero import PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
 
+from pathlib import Path
 # Coordinator is used to centralize the data updates
 PARALLEL_UPDATES = 0
 
 _LOGGER = logging.getLogger(__name__)
 
+_logged_missing_file = False
 
 def read_cpu_temperature():
-    with open("/sys/class/thermal/thermal_zone0/temp", "r") as f:
-        temp_str = f.readline().strip()
-    return float(temp_str) / 1000.0  # in °C
+    global _logged_missing_file
+    
+    path = Path("/sys/class/thermal/thermal_zone0/temp")
+    if not path.exists():
+        if not _logged_missing_file:
+            _LOGGER.info("File CPU temperature non presente: %s", path)
+            _logged_missing_file = True
+        return None
+
+    try:
+        temp_str = path.read_text().strip()
+        return float(temp_str) / 1000.0  # in °C
+    except Exception as e:
+        _LOGGER.error("Errore lettura temperatura CPU: %s", e)
+        return None
+
 
 
 class PIDCPUTemperatureSensor(CoordinatorEntity[PIDDataCoordinator], SensorEntity):
