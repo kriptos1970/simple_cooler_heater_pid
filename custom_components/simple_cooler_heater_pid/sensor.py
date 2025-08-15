@@ -299,7 +299,7 @@ class PIDOutputSensor(
     ):
         super().__init__(coordinator)
 
-        name = "PID Output"
+        name = "Fan Speed"
         key = "pid_output"
 
         BasePIDEntity.__init__(self, hass, entry, key, name)

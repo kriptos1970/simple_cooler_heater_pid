@@ -11,6 +11,6 @@
   "quality_scale": "silver",
   "requirements": ["simple-pid==2.0.1", "gpiozero", "pigpio"],
   "ssdp": [],
-  "version": "1.0.9",
+  "version": "1.0.10",
   "zeroconf": []
 }
