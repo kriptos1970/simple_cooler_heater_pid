@@ -54,7 +54,7 @@ def read_cpu_temperature():
 
     try:
         temp_str = path.read_text().strip()
-        return float(temp_str) / 1000.0  # in °C
+        return round(float(temp_str) / 1000.0,1)  # in °C
     except Exception as e:
         _LOGGER.error("Errore lettura temperatura CPU: %s", e)
         return None
@@ -174,7 +174,7 @@ async def async_setup_entry(
 
         handle.pid.proportional_on_measurement = p_on_m
 
-        output = handle.pid(input_value)
+        output = round(handle.pid(input_value))
         
         #if cooling_mode:
         #    output = out_max + out_min - output
