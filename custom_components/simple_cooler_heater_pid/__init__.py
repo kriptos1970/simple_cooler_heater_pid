@@ -154,10 +154,37 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
+    handle = getattr(entry.runtime_data, "handle", None)
+
+    # Chiudi ventola se esiste
+    if handle and hasattr(handle, "fan_device"):
+        try:
+            handle.fan_device.close()
+            _LOGGER.debug("PWM fan device closed")
+        except Exception as e:
+            _LOGGER.warning("Error closing fan device: %s", e)
+
+        if handle and hasattr(handle, "pigpio_factory"):
+            try:
+                handle.pigpio_factory.close()  # chiude la connessione al daemon pigpio
+            except Exception as e:
+                _LOGGER.warning("Error closing pigpio factory: %s", e)
+            finally:
+                handle.pigpio_factory = None
+    
+    # Rimuovi eventuali listener registrati manualmente
+    if hasattr(handle, "remove_listeners"):
+        for remove in handle.remove_listeners:
+            try:
+                remove()
+            except Exception as e:
+                _LOGGER.warning("Error removing listener: %s", e)
+
     if unload_ok := await hass.config_entries.async_unload_platforms(entry, PLATFORMS):
-        # reset runtime_data zodat tests slagen
         entry.runtime_data = None
+
     return unload_ok
+
 
 
 async def _async_update_options_listener(

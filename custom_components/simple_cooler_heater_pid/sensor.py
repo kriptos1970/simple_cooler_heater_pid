@@ -84,6 +84,9 @@ async def async_setup_entry(
     """Set up PID output and diagnostic sensors."""
     handle: PIDDeviceHandle = entry.runtime_data.handle
 
+    if not hasattr(handle, "remove_listeners"):
+        handle.remove_listeners = []
+
     # Init PID with default values
     handle.pid = PID(1.0, 0.1, 0.05, setpoint=50, sample_time=None, auto_mode=False)
 
@@ -97,10 +100,9 @@ async def async_setup_entry(
     user_pin = entry.data.get(CONF_PIGPIO_PIN, DEFAULT_PIGPIO_PIN)
 
     try:
-        factory = PiGPIOFactory(host=user_host, port=user_port)
-        fan = PWMOutputDevice(user_pin, pin_factory=factory)
-        # Salva l'oggetto fan nell'handle per riutilizzarlo
-        handle.fan_device = fan
+        handle.pigpio_factory = PiGPIOFactory(host=user_host, port=user_port)
+        handle.fan_device = PWMOutputDevice(user_pin, pin_factory=handle.pigpio_factory)
+
     except Exception as e:
         _LOGGER.error("Errore durante l'inizializzazione del PWM fan: %s", e)
         # Gestisci l'errore, ad esempio disabilitando la funzione della ventola
@@ -268,19 +270,23 @@ async def async_setup_entry(
         "output_max",
         "sample_time",
     ]:
-        hass.bus.async_listen(
+        
+        remove = hass.bus.async_listen(
             "state_changed", make_listener(f"number.{entry.entry_id}_{key}")
         )
+        handle.remove_listeners.append(remove)
 
     for key in ["auto_mode", "proportional_on_measurement", "windup_protection"]:
-        hass.bus.async_listen(
+        remove = hass.bus.async_listen(
             "state_changed", make_listener(f"switch.{entry.entry_id}_{key}")
         )
+        handle.remove_listeners.append(remove)
 
     for key in ["start_mode"]:
-        hass.bus.async_listen(
+        remove = hass.bus.async_listen(
             "state_changed", make_listener(f"select.{entry.entry_id}_{key}")
         )
+        handle.remove_listeners.append(remove)
 
 
 class PIDOutputSensor(
